@@ -4,15 +4,13 @@ const productController = require('../controllers/productController');
 const authController = require('../controllers/authController');
 const router = express.Router();
 
+router.route('/:id').get(productController.getProduct);
+
+router.use(authController.protect);
+
 router
   .route('/')
-  .post(
-    authController.protect,
-    authController.restrictTo('admin'),
-    productController.addProduct
-  )
-  .get(authController.protect, productController.getAllProduct);
-
-router.route('/:id').get(productController.getProduct);
+  .post(authController.restrictTo('admin'), productController.addProduct)
+  .get(productController.getAllProduct);
 
 module.exports = router;

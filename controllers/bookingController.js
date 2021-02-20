@@ -43,9 +43,8 @@ exports.getAllBookings = catchAsync(async (req, res, next) => {
     .sort()
     .limitFields()
     .paginate();
-  // const doc = await features.query.explain();
+
   const bookings = await features.query;
-  // const bookings = await Booking.find();
 
   res.status(200).json({
     status: 'success',

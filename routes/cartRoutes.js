@@ -5,18 +5,14 @@ const authController = require('../controllers/authController');
 
 const router = express.Router();
 
+router.use(authController.protect);
+
 router
   .route('/')
-  .get(
-    authController.protect,
-    authController.restrictTo('admin'),
-    cartController.viewOrders
-  );
+  .get(authController.restrictTo('admin'), cartController.viewOrders);
 
-router
-  .route('/:productID')
-  .post(authController.protect, cartController.addToCart);
+router.route('/:productID').post(cartController.addToCart);
 
-router.route('/mycart').get(authController.protect, cartController.displayCart);
+router.route('/mycart').get(cartController.displayCart);
 
 module.exports = router;

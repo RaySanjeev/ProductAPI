@@ -5,20 +5,14 @@ const bookingController = require('../controllers/bookingController');
 
 const router = express.Router();
 
+router.use(authController.protect);
+
 router
   .route('/')
-  .get(
-    authController.protect,
-    authController.restrictTo('admin'),
-    bookingController.getAllBookings
-  );
+  .get(authController.restrictTo('admin'), bookingController.getAllBookings);
 
-router
-  .route('/:productID')
-  .post(authController.protect, bookingController.createBooking);
+router.route('/:productID').post(bookingController.createBooking);
 
-router
-  .route('/my-bookings')
-  .get(authController.protect, bookingController.getUserBookings);
+router.route('/my-bookings').get(bookingController.getUserBookings);
 
 module.exports = router;

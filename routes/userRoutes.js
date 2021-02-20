@@ -11,12 +11,10 @@ router.use('/bookings', bookingRouter);
 router.route('/signUp').post(authController.signUp);
 router.route('/login').get(authController.login);
 
-router
-  .route('/updateMe')
-  .patch(authController.protect, userController.updateMe);
+router.use(authController.protect);
 
-router
-  .route('/updatePassword')
-  .post(authController.protect, authController.updatePassword);
+router.route('/updateMe').patch(userController.updateMe);
+
+router.route('/updatePassword').post(authController.updatePassword);
 
 module.exports = router;

@@ -39,7 +39,6 @@ exports.displayCart = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
-    results: cartProducts.length,
     data: cartProducts,
   });
 });
@@ -49,7 +48,6 @@ exports.viewOrders = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
-    results: products.length,
     data: products,
   });
 });

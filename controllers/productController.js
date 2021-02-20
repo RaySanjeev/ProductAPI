@@ -12,17 +12,13 @@ exports.addProduct = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllProduct = catchAsync(async (req, res, next) => {
-  // let filter = {};
-  // if (req.params.tourId) filter = { tour: req.params.tourId };
-
   const features = new APIFeatures(Product.find(), req.query)
     .filter()
     .sort()
     .limitFields()
     .paginate();
-  // const doc = await features.query.explain();
+
   const products = await features.query;
-  // const products = await Product.find();
 
   res.status(200).json({
     status: 'success',
