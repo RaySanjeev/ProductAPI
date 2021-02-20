@@ -1,6 +1,7 @@
 const Product = require('../models/productModel');
 const Booking = require('../models/bookingModel');
 const catchAsync = require('../utils/catchAsync');
+const APIFeatures = require('../utils/ApiFeatures');
 
 exports.createBooking = catchAsync(async (req, res, next) => {
   const getProduct = await Product.findById(req.params.productID);
@@ -37,7 +38,14 @@ exports.getUserBookings = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllBookings = catchAsync(async (req, res, next) => {
-  const bookings = await Booking.find();
+  const features = new APIFeatures(Booking.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+  // const doc = await features.query.explain();
+  const bookings = await features.query;
+  // const bookings = await Booking.find();
 
   res.status(200).json({
     status: 'success',
